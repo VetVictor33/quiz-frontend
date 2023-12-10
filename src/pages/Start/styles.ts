@@ -3,14 +3,12 @@ import styled from "styled-components";
 export const MainTitle = styled.h1`
   font-size: 24px;
   color: ${({ theme }) => theme.textColor.secondary};
-  text-align: center;
-  margin-top: 28px;
+  margin-bottom: 80px; 
 `
 
-export const GreetingsWrapper = styled.div`
+export const GreetingsForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin: auto;
 
   gap: 8px;
 
