@@ -1,0 +1,9 @@
+import { QuizQuestion } from "./quiz";
+
+export interface QuizRequest {
+  quiz: QuizQuestion[]
+}
+
+export interface QuizResponse {
+
+}

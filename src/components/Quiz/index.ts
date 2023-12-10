@@ -8,6 +8,8 @@ export const QuizBox = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 500px;
   height: 600px;
 

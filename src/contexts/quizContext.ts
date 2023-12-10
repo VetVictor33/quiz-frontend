@@ -4,6 +4,7 @@ import { QuizAnswer, QuizGame, QuizQuestion } from "src/interfaces/quiz";
 createStore(
   {
     game: {} as QuizGame,
+    currentQuestionIndex: 0,
     questions: []
   },
   {
@@ -24,7 +25,7 @@ export function addUserName(state: GlobalState, name: string) {
 export function addQuestions(state: GlobalState, questions: QuizQuestion[]) {
   return {
     ...state,
-    questions: questions
+    questions: [...questions]
   }
 }
 

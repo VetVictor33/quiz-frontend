@@ -9,13 +9,13 @@ export interface QuizAnswer {
 }
 
 export interface QuizQuestion {
-  id: string
+  _id: string
   title: string
   options: QuizOption[]
 }
 
 export interface QuizOption {
-  id: string
+  _id: string
   text: string
 }
 
