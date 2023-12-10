@@ -8,7 +8,8 @@ createStore(
       answers: []
     },
     currentQuestionIndex: 0,
-    questions: []
+    questions: [],
+    correctAnswers: 0,
   },
   {
     persist: "none"
@@ -20,7 +21,7 @@ export function addUserName(state: GlobalState, name: string) {
     ...state,
     game: {
       ...state.game,
-      name
+      playerName: name
     }
   }
 }
@@ -32,12 +33,19 @@ export function addQuestions(state: GlobalState, questions: QuizQuestion[]) {
   }
 }
 
+export function changeCurrentQuestionIndex(state: GlobalState, newIndex: number) {
+  return {
+    ...state,
+    currentQuestionIndex: newIndex
+  }
+}
+
 export function addNewAnswer(state: GlobalState, answer: QuizAnswer) {
   const newAnswers = [...state.game.answers]
-  const alreadyAnswered = state.game.answers.find(({ _questionId }) => _questionId === answer._questionId)
+  const alreadyAnswered = state.game.answers.find(({ _questionID }) => _questionID === answer._questionID)
 
   if (alreadyAnswered) {
-    const alreadyAnsweredIndex = state.game.answers.findIndex(({ _questionId }) => _questionId === answer._questionId);
+    const alreadyAnsweredIndex = state.game.answers.findIndex(({ _questionID }) => _questionID === answer._questionID);
     newAnswers.splice(alreadyAnsweredIndex, 1, answer)
   } else {
     newAnswers.push(answer)
@@ -48,5 +56,24 @@ export function addNewAnswer(state: GlobalState, answer: QuizAnswer) {
       ...state.game,
       answers: [...newAnswers]
     }
+  }
+}
+
+export function newGame(state: GlobalState) {
+  return {
+    ...state,
+    game: {
+      ...state.game,
+      answers: []
+    },
+    currentQuestionIndex: 0,
+    correctAnswers: 0
+  }
+}
+
+export function changeCorrectAnswers(state: GlobalState, correctAnswers: number) {
+  return {
+    ...state,
+    correctAnswers
   }
 }

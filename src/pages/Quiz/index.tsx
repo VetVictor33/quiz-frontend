@@ -8,17 +8,22 @@ import { QuizForm } from "./components/QuizForm"
 export function Quiz() {
   const methods = useForm()
   const navigateTo = useNavigate()
-  const { getCurrentQuestion, nextQuestionId, currentQuestionIndex, questions } = useQuiz()
+  const { getCurrentQuestion, nextQuestionId, currentQuestionIndex, questions, getResults } = useQuiz()
   const { quizId } = useParams<{ quizId: string }>()
   const quiz = getCurrentQuestion(quizId!)!
 
-  const handleQuizChange = (action: 'next' | 'previous') => {
+  const handleQuizChange = async (action: 'next' | 'previous') => {
     if (action == 'next') {
       const id = nextQuestionId(currentQuestionIndex + 1)
       if (id) {
         navigateTo(`/quiz/${id}`)
       } else {
-        navigateTo('/resultado')
+        try {
+          await getResults()
+          navigateTo('/resultado')
+        } catch (error) {
+          navigateTo('/')
+        }
       }
     } else {
       const id = nextQuestionId(currentQuestionIndex - 1)

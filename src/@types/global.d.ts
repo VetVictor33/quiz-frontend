@@ -7,5 +7,6 @@ declare module 'little-state-machine' {
     game: QuizGame,
     currentQuestionIndex: number,
     questions: QuizQuestion[]
+    correctAnswers: number
   }
 }

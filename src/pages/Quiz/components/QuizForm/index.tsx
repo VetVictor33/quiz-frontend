@@ -21,15 +21,15 @@ export function QuizForm({ children, quiz }: QuizFormProps) {
   const { addNewAnswer, answers } = useQuiz()
 
   const currentAnswer = useMemo(() => {
-    return answers.find((answer) => answer._questionId === quiz._id)
+    return answers.find((answer) => answer._questionID === quiz._id)
   }, [answers, quiz._id])
 
   const onSubmit = (data: StartFormType) => {
-    addNewAnswer({ _questionId: quiz._id, _optionId: data._optionID })
+    addNewAnswer({ _questionID: quiz._id, _optionID: data._optionID })
   }
 
   useEffect(() => {
-    setValue('_optionID', currentAnswer?._optionId ?? '')
+    setValue('_optionID', currentAnswer?._optionID ?? '')
   }, [answers, quiz._id])
 
   return (

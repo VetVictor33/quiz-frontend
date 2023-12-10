@@ -4,8 +4,8 @@ export interface QuizGame {
 }
 
 export interface QuizAnswer {
-  _questionId: string
-  _optionId: string
+  _questionID: string
+  _optionID: string
 }
 
 export interface QuizQuestion {

@@ -5,5 +5,6 @@ export interface QuizRequest {
 }
 
 export interface QuizResponse {
-
+  name: string
+  correctAnswers: number
 }

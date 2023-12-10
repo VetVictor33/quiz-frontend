@@ -1,11 +1,13 @@
-import { addNewAnswer, addQuestions, addUserName } from "@contexts/quizContext";
-import { QuizRequest } from "@interfaces/api";
+import { newGame, changeCorrectAnswers, changeCurrentQuestionIndex, addNewAnswer, addQuestions, addUserName } from "@contexts/quizContext";
+import { QuizRequest, QuizResponse } from "@interfaces/api";
 import { QuizAnswer, QuizQuestion } from "@interfaces/quiz";
 import { api } from "@libs/axios";
 import { useStateMachine } from "little-state-machine";
 
 export function useQuiz() {
-  const { actions, state } = useStateMachine({ addUserName, addQuestions, addNewAnswer })
+  const { actions, state } = useStateMachine({
+    addUserName, addQuestions, changeCurrentQuestionIndex, addNewAnswer, changeCorrectAnswers, newGame
+  })
 
   const addNameActions = (name: string) => actions.addUserName(name)
   const addQuestionsAction = async () => {
@@ -22,7 +24,7 @@ export function useQuiz() {
     }
 
     if (state.questions[nextQuestionIndex]) {
-      state.currentQuestionIndex = nextQuestionIndex
+      actions.changeCurrentQuestionIndex(nextQuestionIndex)
       return state.questions[nextQuestionIndex]._id
     }
 
@@ -34,15 +36,26 @@ export function useQuiz() {
     return currentQuestion
   }
 
+  async function getResults() {
+    const { data: { correctAnswers } } = await api.post<QuizResponse>('/check-quiz', {
+      name: state.game.playerName,
+      answers: state.game.answers
+    })
+    actions.changeCorrectAnswers(correctAnswers)
+  }
+
   return {
     addUserName: addNameActions,
     addQuestions: addQuestionsAction,
     addNewAnswer: addAnswersAction,
     nextQuestionId,
     getCurrentQuestion,
+    getResults,
     currentQuestionIndex: state.currentQuestionIndex,
     game: state.game,
     answers: state.game.answers,
-    questions: state.questions
+    questions: state.questions,
+    correctAnswers: state.correctAnswers,
+    newGame: actions.newGame
   }
 }
