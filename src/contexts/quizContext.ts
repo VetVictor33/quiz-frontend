@@ -1,9 +1,12 @@
 import { GlobalState, createStore } from "little-state-machine";
-import { QuizAnswer, QuizGame, QuizQuestion } from "src/interfaces/quiz";
+import { QuizAnswer, QuizQuestion } from "src/interfaces/quiz";
 
 createStore(
   {
-    game: {} as QuizGame,
+    game: {
+      playerName: '',
+      answers: []
+    },
     currentQuestionIndex: 0,
     questions: []
   },
@@ -30,10 +33,20 @@ export function addQuestions(state: GlobalState, questions: QuizQuestion[]) {
 }
 
 export function addNewAnswer(state: GlobalState, answer: QuizAnswer) {
+  const newAnswers = [...state.game.answers]
+  const alreadyAnswered = state.game.answers.find(({ _questionId }) => _questionId === answer._questionId)
+
+  if (alreadyAnswered) {
+    const alreadyAnsweredIndex = state.game.answers.findIndex(({ _questionId }) => _questionId === answer._questionId);
+    newAnswers.splice(alreadyAnsweredIndex, 1, answer)
+  } else {
+    newAnswers.push(answer)
+  }
   return {
     ...state,
-    answers: {
-      ...answer
+    game: {
+      ...state.game,
+      answers: [...newAnswers]
     }
   }
 }

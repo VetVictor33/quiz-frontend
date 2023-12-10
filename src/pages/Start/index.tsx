@@ -17,14 +17,13 @@ export function Start() {
   const { register, handleSubmit, formState: { errors } } = useForm<StartFormType>({
     resolver: zodResolver(StartFormSchema)
   })
-  const { addUserName, addQuestions, nextQuestionId } = useQuiz()
+  const { addUserName, addQuestions } = useQuiz()
 
   const onSubmit = async (data: StartFormType) => {
     addUserName(data.name)
     try {
-      await addQuestions()
-      const id = nextQuestionId(0)
-      navigateTo(`/quiz/${id}`)
+      const { _id } = await addQuestions()
+      navigateTo(`/quiz/${_id}`)
     } catch (error) {
       console.log(error)
     }
