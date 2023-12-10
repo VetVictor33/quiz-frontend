@@ -1,6 +1,5 @@
 import { newGame, changeCorrectAnswers, changeCurrentQuestionIndex, addNewAnswer, addQuestions, addUserName } from "@contexts/quizContext";
-import { QuizRequest, QuizResponse } from "@interfaces/api";
-import { QuizAnswer, QuizQuestion } from "@interfaces/quiz";
+import { QuizRequest, QuizResponse, QuizAnswer, QuizQuestion } from "@interfaces/index";
 import { api } from "@libs/axios";
 import { useStateMachine } from "little-state-machine";
 

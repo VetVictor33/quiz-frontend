@@ -1,6 +1,6 @@
 import { QuizOptionsWrapper, QuizTitle, StyledQuizForm } from "@components/Quiz"
 import { useQuiz } from "@hooks/useQuiz"
-import { QuizQuestion } from "@interfaces/quiz"
+import { QuizQuestion } from "@interfaces/index"
 import { useEffect, useMemo } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 import { z } from "zod"
