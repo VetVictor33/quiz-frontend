@@ -12,7 +12,7 @@ createStore(
     correctAnswers: 0,
   },
   {
-    persist: "none"
+    persist: "action"
   }
 )
 
